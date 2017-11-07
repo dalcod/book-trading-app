@@ -1,0 +1,33 @@
+<section>
+    <h2>Delete Account</h2>
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <form [formGroup]="delAccForm" (submit)="onSubmit(delAccForm.value)">
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="delPassword">Password:</label>
+                        <input type="password" class="form-control" id="delPassword" autocomplete="off" formControlName="password">
+                        <small class="form-error" *ngIf="formErrors.password">{{formErrors.password}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="delConfirmPassword">Confirm password:</label>
+                        <input type="password" class="form-control" id="delConfirmPassword" autocomplete="off" formControlName="confirmPassword">
+                        <small class="form-error" *ngIf="formErrors.confirmPassword">{{formErrors.confirmPassword}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <button class="btn btn-outline-danger">Delete</button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-8">
+                        <small class="form-error" *ngIf="errMsg">{{errMsg}}</small>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

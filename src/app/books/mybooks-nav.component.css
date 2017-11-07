@@ -1,0 +1,77 @@
+/* utility/special classes */
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+.active {
+    border-bottom-style: solid;
+    border-bottom-color: darkgrey;
+    border-bottom-width: 1px;
+    list-style-type: circle;
+    margin-left: 5px;
+}
+
+/* ---------------------- */
+
+h1 {
+    text-align: center;
+    font-size: 3.6rem;
+}
+#title {
+    color: black;
+    margin: 15px auto 30px auto;
+    padding: 20px 0;
+}
+#input-title {
+    text-align: center;
+    color: black;
+    margin: 0;
+}
+form {
+    text-align: center;
+}
+#input-wrapper {
+    display: inline-block;
+    width: 30%;
+    margin: 30px 10px 40px 10px;
+}
+form button {
+    margin-top: -5px;
+}
+form button:hover {
+    cursor: pointer;
+}
+ul {
+    padding: 15px;
+}
+ul li {
+    list-style-type: none;
+}
+.main-li {
+    padding: 10px 0;
+    border-bottom-style: solid;
+    border-bottom-color: darkgrey;
+    border-bottom-width: 2px;
+}
+.nested-ul {
+    padding: 0 0 0 30px;
+}
+.nested-ul li {
+    padding: 7px 0;
+}
+.nested-ul li:hover {
+    cursor: pointer;
+}
+#all-selling-nav {
+    padding: 10px 0;
+}
+#all-selling-nav:hover {
+    cursor: pointer;
+}
+.dash {
+    position: relative;
+    left: -15px;
+}
+.items-number {
+    margin-left: 6px;
+}

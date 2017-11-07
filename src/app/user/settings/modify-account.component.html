@@ -1,0 +1,40 @@
+<section>
+    <h2>Change Password</h2>
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <form [formGroup]="modifyForm" (submit)="onSubmit(modifyForm.value)">
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="currPass">Current password:</label>
+                        <input type="password" class="form-control" id="currPass" autocomplete="off" formControlName="currentPassword">
+                        <small class="form-error" *ngIf="formErrors.currentPassword">{{formErrors.currentPassword}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="password">New password:</label>
+                        <input type="password" class="form-control" id="password" autocomplete="off" formControlName="password">
+                        <small class="form-error" *ngIf="formErrors.password">{{formErrors.password}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="confirmPassword">Confirm new password:</label>
+                        <input type="password" class="form-control" id="confirmPassword" autocomplete="off" formControlName="confirmPassword">
+                        <small class="form-error" *ngIf="formErrors.confirmPassword">{{formErrors.confirmPassword}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <button class="btn btn-outline-warning">Change</button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-6">
+                        <small class="form-error" *ngIf="errMsg">{{errMsg}}</small>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

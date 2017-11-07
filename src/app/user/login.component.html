@@ -1,0 +1,39 @@
+<h1 *ngIf="httpErr" class="http-error">{{httpErr}}</h1>
+<section *ngIf="!httpErr">
+    <div class="row justify-content-center">
+        <div class="col-sm-5">
+            <h1>Login</h1>
+            <form [formGroup]="loginForm" (submit)="onSubmit(loginForm.value)">
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" autocomplete="off" formControlName="username">
+                        <small class="form-error" *ngIf="formErrors.username">{{formErrors.username}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" autocomplete="off" formControlName="password">
+                        <small class="form-error" *ngIf="formErrors.password">{{formErrors.password}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <button class="btn btn-outline-success">Submit</button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-10">
+                        <small class="form-error" *ngIf="errMsg">{{errMsg}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-10">
+                        <h3 class="success" *ngIf="isPasswordChanged()">{{isPasswordChanged()}}</h3>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

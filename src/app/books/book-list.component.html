@@ -1,0 +1,23 @@
+<h1 class="error" *ngIf="httpErr">{{httpErr}}</h1>
+<section *ngIf="!httpErr">
+    <h1>Trading Books App</h1>
+    <div class="row justify-content-around" id="list-container" *ngIf="bookList">
+        <div class="col-sm-2" *ngFor="let book of bookList; let i = index">
+            <div class="wrapper1">
+                <!-- <div class="elem1"></div>
+                <div class="elem2"></div> -->
+                
+                <!-- se l'utente è loggato e nell'oggetto "book" è presente una proprietà "canOffer" veritiera, e l'utente non ha ancora cliccato sull'elemento 'Make an Offer' mostra questi due elementi che 'onhover' ci permettono di visualizzare e quindi utilizzare gli elementi necessari per eseguire un'offerta. -->
+                <div class="wrapper2" *ngIf="isLoggedIn() && book.canOffer && book.volumeInfo.title !== checkedBook"></div>
+                <span id="make-offer" *ngIf="isLoggedIn() && book.canOffer && book.volumeInfo.title !== checkedBook" (click)="makeOffer(book)">Make an offer</span>
+                
+                <!-- se l'utente non è loggato e l'oggetto "book" a cui fa riferimento questa serie di elementi non è contrassegnato con una proprietà "canOffer" veritiera mostra l'icona "fa-times-circle-o" -->
+                <i class="fa fa-times-circle-o fa-3x" aria-hidden="true" *ngIf="isLoggedIn() && !book.canOffer"></i>
+                
+                <!-- se l'utente è loggato e il titolo dell'oggetto "book" a cui fa riferimento questa serie di elementi è uguale alla proprietà "chekedBook" che contiene il titolo a sua volta del libro appena cliccato, mostra l'icona "fa-check" -->
+                <i class="fa fa-check fa-3x" aria-hidden="true" *ngIf="isLoggedIn() && book.volumeInfo.title === checkedBook && book.username !== getUsername()"></i>
+                <img src="{{book.volumeInfo.imageLinks.smallThumbnail}}">
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,9 @@
+<h1 class="error" *ngIf="httpErr">{{httpErr}}</h1>
+<section *ngIf="!httpErr">
+    <h1>Settings</h1>
+    <update-section (onError)="setError($event)"></update-section>
+    <hr />
+    <modify-section (onError)="setError($event)"></modify-section>
+    <hr />
+    <delete-section (onError)="setError($event)"></delete-section>
+</section>

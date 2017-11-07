@@ -1,0 +1,12 @@
+.form-error {
+    color: red;
+}
+h2 {
+    text-align: center;
+    margin: 30px auto;
+    color: #40af00;
+}
+.success {
+    text-align: center;
+    color: green;
+}

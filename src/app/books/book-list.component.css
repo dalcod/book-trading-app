@@ -1,0 +1,92 @@
+section {
+    position: relative;
+    height: 100%;
+}
+.error {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    color: red;
+}
+h1 {
+    color: black;
+    text-align: center;
+    border: 1px solid black;
+    padding: 20px 0;
+    margin: 15px auto 60px auto;
+    font-size: 3.6rem;
+}
+.wrapper1 {
+    position: relative;
+    border: 1px solid darkgrey;
+    display: inline-block;
+    overflow: hidden;
+}
+.wrapper2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.wrapper1:hover .wrapper2 {
+    opacity: 0.3;
+}
+#make-offer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 7px 10px 9px 10px;
+    border: 1px solid #525252;
+    background-color: white;
+    color: #525252;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+.wrapper1:hover #make-offer {
+    opacity: 1;
+    cursor: pointer;
+}
+.fa-times-circle-o {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: darkred;
+}
+.fa-check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: green;
+}
+/*
+.elem1 {
+    position: absolute;
+    left: -10.5px;
+    top: -2.5px;
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    padding-left: 8px;
+    border: 1px solid black;
+    transform: skewY(25deg);
+}
+.elem2 {
+    position: absolute;
+    left: -6.5px;
+    top: -4.7px;
+    display: inline-block;
+    width: 100%;
+    height: 0;
+    padding-top: 2.8px;
+    border: 1px solid black;
+    transform: skewX(68.5deg);
+}
+*/

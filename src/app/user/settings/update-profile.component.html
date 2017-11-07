@@ -1,0 +1,36 @@
+<section>
+    <h2>Update Profile</h2>
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <form [formGroup]="updateProfileForm" (submit)="onSubmit(updateProfileForm.value)">
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" autocomplete="off" formControlName="name">
+                        <small class="form-error" *ngIf="formErrors.name">{{formErrors.name}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" autocomplete="off" formControlName="city">
+                        <small class="form-error" *ngIf="formErrors.city">{{formErrors.city}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <label for="state">State:</label>
+                        <input type="text" class="form-control" id="state" autocomplete="off" formControlName="state">
+                        <small class="form-error" *ngIf="formErrors.state">{{formErrors.state}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-8">
+                        <button class="btn btn-outline-success">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <h3 class="success" *ngIf="successMsg">{{successMsg}}</h3>
+</section>

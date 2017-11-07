@@ -1,0 +1,48 @@
+<h1 *ngIf="httpErr" class="error">{{httpErr}}</h1>
+<section *ngIf="!httpErr">
+    <div class="row justify-content-center">
+        <div class="col-sm-5">
+            <h1 class="border">Signup</h1>
+            <form [formGroup]="signupForm" (submit)="onSubmit(signupForm.value)">
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" autocomplete="off" formControlName="username">
+                        <small class="form-error" *ngIf="formErrors.username">{{formErrors.username}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" autocomplete="off" formControlName="email">
+                        <small class="form-error" *ngIf="formErrors.email">{{formErrors.email}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" autocomplete="off" formControlName="password">
+                        <small class="form-error" *ngIf="formErrors.password">{{formErrors.password}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <label for="confirmPassword">Confirm password:</label>
+                        <input type="password" class="form-control" id="confirmPassword" autocomplete="off" formControlName="confirmPassword">
+                        <small class="form-error" *ngIf="formErrors.confirmPassword">{{formErrors.confirmPassword}}</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-sm-10">
+                        <button class="btn btn-outline-success">Submit</button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-10">
+                        <small class="form-error" *ngIf="errMsg">{{errMsg}}</small>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

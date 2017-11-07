@@ -1,0 +1,15 @@
+#login {
+    margin-left: 15px;
+}
+.navbar-brand {
+    color: darkgray;
+}
+.active {
+    color: white;
+}
+li a:hover {
+    cursor: pointer;
+}
+.navbar-text {
+   padding-right: 15px;
+}

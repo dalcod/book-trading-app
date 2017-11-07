@@ -1,0 +1,241 @@
+<h1 class="error" *ngIf="httpErr">{{httpErr}}</h1>
+<section *ngIf="!httpErr">
+    <h1 id="title" class="border">MyBooks</h1>
+    <!-- --------------------------------------------------------------------------------------------------------------------------- -->
+
+    <main class="row">
+        
+        <!-- sezione relativa al menu di navigazione -->
+        
+        <div class="col-sm-12" id="title-section">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="border" id="a"></div>
+                </div>
+                <div class="col-sm-9 border">
+                    <h2 *ngIf="!title">All Selling</h2>
+                    <h2 *ngIf="title">{{title}}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <ul class="border">
+                <ul class="nested-ul">
+                    <li [style.list-style-type]="sections.allSell.visible ? 'circle' : 'none'" id="all-selling-nav" (click)="show_hide(sections.allSell.name)">
+                        <span *ngIf="!sections.allSell.visible" class="dash">-</span>
+                        <span [class.active]="sections.allSell.visible">All Selling</span>
+                    </li>
+                </ul>
+                <li class="main-li m-b-10"><span>Offers</span></li>
+                <ul class="nested-ul">
+                    <li [style.list-style-type]="sections.recOff.visible ? 'circle' : 'none'" (click)="show_hide(sections.recOff.name)">
+                        <span *ngIf="!sections.recOff.visible" class="dash">-</span>
+                        <span [class.active]="sections.recOff.visible">
+                            Received
+                            <span class="items-number">({{receivedOffersList.length}})</span>
+                        </span>
+                    </li>
+                    <li [style.list-style-type]="sections.accOff.visible ? 'circle' : 'none'" (click)="show_hide(sections.accOff.name)">
+                        <span *ngIf="!sections.accOff.visible" class="dash">-</span>
+                        <span [class.active]="sections.accOff.visible">
+                            Accepted
+                            <span class="items-number">({{acceptedOffersList.length}})</span>
+                        </span>
+                    </li>
+                </ul>
+                <li class="main-li m-b-10"><span>My Offers</span></li>
+                <ul class="nested-ul">
+                    <li [style.list-style-type]="sections.myOff.visible ? 'circle' : 'none'" (click)="show_hide(sections.myOff.name)">
+                        <span *ngIf="!sections.myOff.visible" class="dash">-</span>
+                        <span [class.active]="sections.myOff.visible">
+                            Sent
+                            <span class="items-number">({{myOffersList.length}})</span>
+                        </span>
+                    </li>
+                    <li [style.list-style-type]="sections.myAccOff.visible ? 'circle' : 'none'" (click)="show_hide(sections.myAccOff.name)">
+                        <span *ngIf="!sections.myAccOff.visible" class="dash">-</span>
+                        <span [class.active]="sections.myAccOff.visible">
+                            Confirmed
+                            <span class="items-number">({{myAcceptedOffersList.length}})</span>
+                        </span>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+
+        <!-- Sezioni per gestione offerte -->
+
+        <div class="col-sm-9 sections border" id="all-selling-section" *ngIf="sections.allSell.visible">
+            <form [formGroup]="bookForm" (submit)="getBook(bookForm.value)">
+                    <label for="bookInput">Book Title:</label>
+                    <div id="input-wrapper">
+                        <input type="text" id="bookInput" class="form-control" formControlName="bookTitle">
+                    </div>
+                    <button class="btn btn-outline-success">Add</button>
+                    <small class="error" *ngIf="formErrors.bookTitle">{{formErrors.bookTitle}}</small>
+            </form>
+            <div class="row justify-content-around" *ngIf="allSellingList">
+                <div class="col-sm-2 book-cont" *ngFor="let book of allSellingList; let i=index">
+                    <div class="wrapper1">
+                        <div id="layer"></div>
+                        <span class="delete" (click)="deleteMyBook(book.volumeInfo.title)">Remove</span>
+                        <img class="border" src="{{book.volumeInfo.imageLinks.smallThumbnail}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-9 sections" *ngIf="sections.recOff.visible">
+            <div *ngIf="receivedOffersList">
+                <div class="row justify-content-start book-cont" *ngFor="let book of receivedOffersList; let i=index">
+                    <div class="col-sm-6 border">
+                        <div class="wrapper1">
+                            <div class="span-wrapper">
+                                <div class="span-wrapper2"><span class="accept" (click)="acceptOffer(book)">Accept Offer</span></div>
+                                <div class="span-wrapper2"><span class="delete" (click)="deleteOffer(book)">Reject Offer</span></div>
+                                <!-- tramite l'evento click andremo a passare alla funzione "getUserInfo" una serie di parametri che ci consentirano di raccogliere le informazioni relative ad un determinato utente. Se la sezione in questione rientra nella macrosezione "Offers" allora come primo parametro dovremo passare l'username dell'offerente ".bidder", se invece la macrosezione è "myOffers" allora l'username sarà il venditore ".seller". Il secondo parametro sarà il titolo di quel determinato libro questo ci servirà in seguito per determinare l'indice dell'elemento appena cliccato. Infine andremo a passare la lista/array contenente le varie offerte relative a questa sezione e sulla quale andremo ad effetture la ricerca per l'indice di questo elemento/offerta. -->
+                                <div class="span-wrapper2"><span class="show-info" (click)="getUserInfo(book.bidder, book.title, receivedOffersList)">Contact Bidder</span></div>
+                            </div>
+                            <img src="{{book.imageLinks.smallThumbnail}}">
+                        </div>
+                    </div>
+                    <!-- se la proprietà "showInfo" è veritiera e l'indice della sezione info combacia con l'indice dell'oggetto relativo all'offerta inserito in questo caso nell'array "recevedOffersList" -->
+                    <div class="col-sm-6" *ngIf="showInfo && i === elemPos">
+                        <div class="info-wrapper border">
+                            <div class="info-inner-wrapper">
+                                <h3>Contact Info</h3>
+                                <div class="row justify-content-center">
+                                    <p><b>Email: </b>{{email}}</p>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <p><b>Name: </b>{{name}}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p><b>City: </b>{{city}}</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p><b>State: </b>{{state}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-9 sections" *ngIf="sections.accOff.visible">
+            <div *ngIf="acceptedOffersList">
+                <div class="row justify-content-start book-cont" *ngFor="let book of acceptedOffersList; let i=index">
+                    <div class="col-sm-6 border">
+                        <div class="wrapper1">
+                            <div class="span-wrapper">
+                                <div class="span-wrapper2_b"><span class="delete" (click)="deleteOffer(book)">Reject Offer</span></div>
+                                <div class="span-wrapper2_b"><span class="show-info" (click)="getUserInfo(book.bidder, book.title, acceptedOffersList)">Contact Bidder</span></div>
+                            </div>
+                            <img src="{{book.imageLinks.smallThumbnail}}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6" *ngIf="showInfo && i === elemPos">
+                        <div class="info-wrapper border">
+                            <div class="info-inner-wrapper">
+                                <h3>Contact Info</h3>
+                                <div class="row justify-content-center">
+                                    <p><b>Email: </b>{{email}}</p>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <p><b>Name: </b>{{name}}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p><b>City: </b>{{city}}</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p><b>State: </b>{{state}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-9 sections" *ngIf="sections.myOff.visible">
+            <div *ngIf="myOffersList">
+                <div class="row justify-content-start book-cont" *ngFor="let book of myOffersList; let i=index">
+                    <div class="col-sm-6 border">
+                        <div class="wrapper1">
+                            <div class="span-wrapper">
+                                <div class="span-wrapper2_c">
+                                    <span class="show-info" (click)="getUserInfo(book.seller, book.title, myOffersList)">Contact Seller</span>
+                                </div>
+                            </div>
+                            <img src="{{book.imageLinks.smallThumbnail}}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6" *ngIf="showInfo && i === elemPos">
+                        <div class="info-wrapper border">
+                            <div class="info-inner-wrapper">
+                                <h3>Contact Info</h3>
+                                <div class="row justify-content-center">
+                                    <p><b>Email: </b>{{email}}</p>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <p><b>Name: </b>{{name}}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p><b>City: </b>{{city}}</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p><b>State: </b>{{state}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-9 sections" *ngIf="sections.myAccOff.visible">
+            <div *ngIf="myAcceptedOffersList">
+                <div class="row justify-content-start book-cont" *ngFor="let book of myAcceptedOffersList; let i=index">
+                    <div class="col-sm-6 border">
+                        <div class="wrapper1">
+                            <div class="span-wrapper">
+                                <div class="span-wrapper2_c">
+                                    <span class="show-info" (click)="getUserInfo(book.seller, book.title, myAcceptedOffersList)">Contact Seller</span>
+                                </div>
+                            </div>
+                            <img src="{{book.imageLinks.smallThumbnail}}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6" *ngIf="showInfo && i === elemPos">
+                        <div class="info-wrapper border">
+                            <div class="info-inner-wrapper">
+                                <h3>Contact Info</h3>
+                                <div class="row justify-content-center">
+                                    <p><b>Email: </b>{{email}}</p>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <p><b>Name: </b>{{name}}</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p><b>City: </b>{{city}}</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p><b>State: </b>{{state}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
