@@ -29,12 +29,22 @@ router.get('/book/:username/:book', passport.authenticate('jwt', {session: false
         var resObj = JSON.parse(body);
         resObj.items[0].username = username;
         Books.find({}, function(err, docArr){
-            docArr[0].booksList.push(resObj.items[0])
-            docArr[0].save(function(err, done){
-                if (err) return res.status(500).send(err);
-            });
+            console.log(docArr[0])
+            if (!docArr[0]) {
+                var books = new Books();
+                books.booksList.push(resObj.items[0]);
+                books.save(function(err, done){
+                    if (err) return res.status(500).send(err);
+                    return res.status(200).json({newBook: resObj.items[0]});
+                });
+            } else {
+                docArr[0].booksList.push(resObj.items[0])
+                docArr[0].save(function(err, done){
+                    if (err) return res.status(500).send(err);
+                    return res.status(200).json({newBook: resObj.items[0]});
+                });
+            }
         });
-        return res.status(200).json({newBook: resObj.items[0]});
     });
 });
 
@@ -63,10 +73,13 @@ router.get('/mybooks/:username', passport.authenticate('jwt', {session: false}),
     var username = req.params.username;
     Books.find({}, function(err, docArr){
         if (err) return res.status(500).send(err);
+        if (!docArr[0]) {
+            return res.status(200).json({myBooks: []});
+        }
         var arr = docArr[0].booksList.filter(function(obj){
             return obj.username === username;
         });
-        res.status(200).json({myBooks: arr});
+        return res.status(200).json({myBooks: arr});
     });
 });
 
@@ -74,7 +87,11 @@ router.get('/mybooks/:username', passport.authenticate('jwt', {session: false}),
 router.get('/all-books', function(req, res){
     Books.find({}, function(err, docArr){
         if (err) return res.status(500).send(err);
-        res.status(200).json({list: docArr[0].booksList});
+        if (!docArr[0]) {
+            return res.status(200).json({list: []});
+        } else {
+            return res.status(200).json({list: docArr[0].booksList});
+        }
     });
 });
 

@@ -15,7 +15,7 @@ var userSchema = new Schema({
         receivedOffers: [],
         acceptedOffers: [],
         myOffers: [],
-        myAcceptedOffers: [],
+        myAcceptedOffers: []
     },
     createdAt: {type: Date, default: Date.now}
 });
